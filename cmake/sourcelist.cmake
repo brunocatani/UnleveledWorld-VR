@@ -1,0 +1,10 @@
+set(SOURCES
+	src/Configuration.cpp
+	src/Configuration.h
+	src/LogPath.h
+	src/PCH.h
+	src/main.cpp
+	src/SimpleIni.h
+	src/hooks.cpp
+	src/hooks.h
+)

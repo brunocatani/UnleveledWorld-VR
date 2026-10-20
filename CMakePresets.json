@@ -19,10 +19,7 @@
       "name": "fast",
       "configurePreset": "fast",
       "configuration": "Release",
-      "targets": [
-        "GLXRM_UnleveledWorld",
-        "configuration_tests"
-      ]
+      "targets": ["GLXRM_UnleveledWorld"]
     }
   ],
   "testPresets": [
@@ -32,9 +29,6 @@
       "configuration": "Release",
       "output": {
         "outputOnFailure": true
-      },
-      "execution": {
-        "jobs": 4
       }
     }
   ]

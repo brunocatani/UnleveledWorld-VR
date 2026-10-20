@@ -22,10 +22,6 @@
       "targets": [
         "GLXRM_UnleveledWorld",
         "configuration_tests"
-      ],
-      "nativeToolOptions": [
-        "/m:1",
-        "/p:CL_MPCount=2"
       ]
     }
   ],

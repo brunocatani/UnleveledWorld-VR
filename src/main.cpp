@@ -123,11 +123,13 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 		return false;
 	}
 
-	const auto ver = a_f4se->RuntimeVersion();
-	if (ver < F4SE::RUNTIME_VR_1_2_72) {
-		logger::critical(FMT_STRING("unsupported runtime v{}"), ver.string());
+	// RuntimeVersion() is F4SEVR's compatibility value, not the executable's version.
+	if (!REL::Module::IsVR() || REL::Module::get().version() != F4SE::RUNTIME_VR_1_2_72) {
+		logger::critical("Fallout4VR.exe 1.2.72.0 is required");
 		return false;
 	}
+	logger::info("Query passed: executable {}; F4SE compatibility runtime {}",
+		REL::Module::get().version().string(), a_f4se->RuntimeVersion().string());
 
 	return true;
 }
@@ -142,7 +144,9 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	if (unlevelInjections) {
 		auto& trampoline = F4SE::GetTrampoline();
 		trampoline.create(20);
-		HookLineAndSinker::RegisterHook(trampoline);
+		if (!HookLineAndSinker::RegisterHook(trampoline)) {
+			unlevelInjections = false;
+		}
 	}
 
 	F4SE::GetMessagingInterface()->RegisterListener(ListenerThing);

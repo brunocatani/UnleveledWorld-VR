@@ -50,7 +50,7 @@ UnlevelInjections=true
 | `UnlevelCharacters` | Sets existing leveled character-list entry levels to 1. |
 | `UnlevelInjections` | Sets script-injected leveled-list entry levels to 1. |
 
-Restart the game after editing. Missing keys use compiled defaults without changing the file. With all three options set to `false`, the plugin makes no list changes.
+Restart the game after editing. Missing keys use compiled defaults without changing the file. With all three options set to `false`, the plugin makes no list changes. `UnlevelInjections` patches one game call; if that call is not the one the port expects, for example because another plugin already changed it, the log says so and injected entries keep their levels.
 
 ## Logs and support
 
@@ -71,10 +71,11 @@ Install Visual Studio 2022 with Desktop development with C++, a Windows SDK, CMa
 ```powershell
 cmake --preset fast
 cmake --build --preset fast
-ctest --preset fast
+cmake --build build-fast --config Release --target build_tests
+ctest --test-dir build-fast -C Release --output-on-failure
 ```
 
-The preset builds Release with compiler concurrency capped at two processes. The DLL is written to `build-fast/Release/GLXRM_UnleveledWorld.dll`. Put machine-specific settings and optional deployment paths in an ignored `CMakeUserPresets.json`.
+The preset builds Release; tests stay out of the default build. The DLL is written to `build-fast/Release/GLXRM_UnleveledWorld.dll`. Put machine-specific settings and optional deployment paths in an ignored `CMakeUserPresets.json`.
 
 ## Credits and permission
 
